@@ -1,0 +1,16 @@
+{
+  "name": "Denny's AI",
+  "short_name": "Denny AI",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#111827",
+  "theme_color": "#22c55e",
+  "description": "Denny's AI powered by WebLLM",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
