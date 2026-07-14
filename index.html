@@ -32,5 +32,12 @@
 <script src="https://esm.run/@mlc-ai/web-llm"></script>
 <script src="app.js"></script>
 
+<script>
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js")
+    .then(() => console.log("Denny's AI PWA ready"));
+}
+</script>
+
 </body>
 </html>
