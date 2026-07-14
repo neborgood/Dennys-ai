@@ -4,13 +4,23 @@ const chat = document.getElementById("chat");
 const status = document.getElementById("status");
 
 async function loadAI() {
-    status.innerText = "Loading Denny's AI model...";
+    try {
+        status.innerText = "Loading Denny's AI model...";
 
-    engine = await mlc.LLMChat.create({
-        model: "Llama-3.2-3B-Instruct-q4f16_1-MLC"
-    });
+        engine = await mlc.CreateMLCEngine(
+            "Phi-3.5-mini-instruct-q4f16_1-MLC",
+            {
+                initProgressCallback: (progress) => {
+                    status.innerText = progress.text;
+                }
+            }
+        );
 
-    status.innerText = "Denny's AI is ready!";
+        status.innerText = "Denny's AI is ready!";
+    } catch (error) {
+        status.innerText = "AI failed to load: " + error.message;
+        console.log(error);
+    }
 }
 
 async function sendMessage() {
@@ -22,9 +32,7 @@ async function sendMessage() {
     addMessage(text, "user");
     input.value = "";
 
-    status.innerText = "Thinking...";
-
-    const reply = await engine.chat.completions.create({
+    const response = await engine.chat.completions.create({
         messages: [
             {
                 role: "user",
@@ -34,11 +42,9 @@ async function sendMessage() {
     });
 
     addMessage(
-        reply.choices[0].message.content,
+        response.choices[0].message.content,
         "ai"
     );
-
-    status.innerText = "Denny's AI is ready!";
 }
 
 function addMessage(text, type) {
